@@ -1,4 +1,3 @@
-import logo from './logo.svg';
 import React, { useEffect, useState } from 'react'
 import './App.css';
 import { ServiceAPI } from './service/service';
@@ -16,7 +15,6 @@ function App() {
       .then((data) => setState(data))
     ServiceAPI.getTotalRes(searchValue)
       .then(data => {
-        console.log(data);
         return setTotalRes(data)
       })
   }, [])
@@ -34,12 +32,6 @@ function App() {
       })
     setPage(1)
   }
-
-  // const showAll = () => {
-  //   setPage(page + 1)
-  //   console.log(page);
-  //   ServiceAPI.showAll(searchValue, page).then((data) => setState(data))
-  // }
 
   const update = id => setPage(id)
 
@@ -70,7 +62,12 @@ function App() {
       { state ? state.map(movie => {
         return <div key={movie.imdbID}>
           <div>
-            <img src={movie.Poster} />
+            {movie.Poster &&
+              <img src={movie.Poster} />
+            }
+            {
+              !movie.Poster && <img src='http://underscoremusic.co.uk/site/wp-content/uploads/2014/05/no-poster.jpg' />
+            }
           </div>
           <div>
             <div>{movie.Title}</div>
@@ -80,9 +77,6 @@ function App() {
         </div>
       }) : ''
       }
-      {/* <div>
-        <button onClick={showAll} >NextPage</button>
-      </div> */}
     </div>
   );
 }
